@@ -1,0 +1,9 @@
+[book]
+title = "Tiny Flink"
+authors = ["Zhen Tong"]
+language = "en"
+src = "src"
+
+[output.html]
+git-repository-url = "https://github.com/58191554/tiny-flink"
+edit-url-template = "https://github.com/58191554/tiny-flink/edit/main/book/{path}"
