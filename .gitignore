@@ -1,0 +1,5 @@
+internal-doc
+/build/
+
+.vscode/
+.DS_Store
