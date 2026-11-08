@@ -4,6 +4,8 @@
 |                                       |                |      |          |
 |                                       |                |      |          |
 
+Read the [Tiny Flink book](https://58191554.github.io/tiny-flink/) for concepts and implementation guides.
+
 Unit tests use [GoogleTest](https://google.github.io/googletest/) and live beside
 the corresponding headers (for example, `src/core/id_test.cpp`). CMake downloads
 the pinned GoogleTest 1.18.0 release on the first configuration, which requires

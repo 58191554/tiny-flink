@@ -5,5 +5,6 @@ language = "en"
 src = "src"
 
 [output.html]
+site-url = "/tiny-flink/"
 git-repository-url = "https://github.com/58191554/tiny-flink"
 edit-url-template = "https://github.com/58191554/tiny-flink/edit/main/book/{path}"
