@@ -14,6 +14,9 @@ add_library(logical_graph src/logical/logical_graph.cpp)
 target_include_directories(logical_graph PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_link_libraries(logical_graph PUBLIC absl::status)
 
+add_library(graph_builder src/logical/graph_builder.cpp)
+target_link_libraries(graph_builder PUBLIC logical_graph absl::statusor)
+
 if(BUILD_TESTING)
     include(FetchContent)
     if(POLICY CMP0135)
@@ -54,4 +57,13 @@ if(BUILD_TESTING)
     add_executable(logical_graph_test src/logical/logical_graph_test.cpp)
     target_link_libraries(logical_graph_test PRIVATE logical_graph GTest::gtest_main)
     gtest_discover_tests(logical_graph_test TEST_PREFIX "logical.graph.")
+
+    add_executable(graph_builder_test src/logical/graph_builder_test.cpp)
+    target_link_libraries(graph_builder_test PRIVATE graph_builder GTest::gtest_main)
+    gtest_discover_tests(graph_builder_test TEST_PREFIX "logical.builder.")
+
+    add_executable(data_reader_test src/api/data_reader_test.cpp src/api/data_reader.cpp)
+    target_include_directories(data_reader_test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+    target_link_libraries(data_reader_test PRIVATE absl::status GTest::gtest_main)
+    gtest_discover_tests(data_reader_test TEST_PREFIX "api.data_reader.")
 endif()

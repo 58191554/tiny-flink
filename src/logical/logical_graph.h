@@ -15,8 +15,11 @@ public:
     void addNode(LogicalNode node);
     void addEdge(LogicalEdge edge);
     absl::Status validate() const;
+    const std::vector<LogicalNode>& nodes() const { return nodes_; }
+    const std::vector<LogicalEdge>& edges() const { return edges_; }
     
 private:
+    std::vector<LogicalNode> sources_;
     std::vector<LogicalNode> nodes_;
     std::vector<LogicalEdge> edges_;
     bool IsDag() const;
