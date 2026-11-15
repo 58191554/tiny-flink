@@ -9,6 +9,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(CTest)
 
+find_package(absl CONFIG REQUIRED)
+add_library(logical_graph src/logical/logical_graph.cpp)
+target_include_directories(logical_graph PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_link_libraries(logical_graph PUBLIC absl::status)
+
 if(BUILD_TESTING)
     include(FetchContent)
     if(POLICY CMP0135)
@@ -45,4 +50,8 @@ if(BUILD_TESTING)
     target_include_directories(stream_message_test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
     target_link_libraries(stream_message_test PRIVATE GTest::gtest_main)
     gtest_discover_tests(stream_message_test TEST_PREFIX "core.stream_message.")
+
+    add_executable(logical_graph_test src/logical/logical_graph_test.cpp)
+    target_link_libraries(logical_graph_test PRIVATE logical_graph GTest::gtest_main)
+    gtest_discover_tests(logical_graph_test TEST_PREFIX "logical.graph.")
 endif()
