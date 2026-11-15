@@ -10,7 +10,7 @@ namespace {
 
 void AddNode(LogicalGraph& graph, std::uint64_t id) {
     graph.addNode(LogicalNode(
-        OperatorId(id), std::make_unique<MapOperator<int>>()));
+        OperatorId(id), std::make_unique<MapOperator<int>>(), false));
 }
 
 void AddEdge(LogicalGraph& graph, std::uint64_t from, std::uint64_t to) {
