@@ -47,7 +47,7 @@ protected:
 TEST_F(FileDataReaderTest, ReadsLinesInOrderThroughBaseInterface) {
     ASSERT_NO_FATAL_FAILURE(WriteFile("first\nsecond\n"));
     FileDataSource source(path_.string());
-    FileDataReader<std::string> file_reader(&source);
+    FileDataReader file_reader(&source);
     DataReader<std::string>& reader = file_reader;
 
     for (const std::string expected : {"first", "second"}) {
@@ -61,7 +61,7 @@ TEST_F(FileDataReaderTest, ReadsLinesInOrderThroughBaseInterface) {
 TEST_F(FileDataReaderTest, EmptyFileImmediatelyEnds) {
     ASSERT_NO_FATAL_FAILURE(WriteFile(""));
     FileDataSource source(path_.string());
-    FileDataReader<std::string> reader(&source);
+    FileDataReader reader(&source);
 
     EXPECT_TRUE(std::holds_alternative<EndOfInput>(reader.poll()));
 }
@@ -69,7 +69,7 @@ TEST_F(FileDataReaderTest, EmptyFileImmediatelyEnds) {
 TEST_F(FileDataReaderTest, PreservesEmptyLinesAsRecords) {
     ASSERT_NO_FATAL_FAILURE(WriteFile("\nvalue\n\n"));
     FileDataSource source(path_.string());
-    FileDataReader<std::string> reader(&source);
+    FileDataReader reader(&source);
 
     for (const std::string expected : {"", "value", ""}) {
         auto message = reader.poll();
@@ -82,7 +82,7 @@ TEST_F(FileDataReaderTest, PreservesEmptyLinesAsRecords) {
 TEST_F(FileDataReaderTest, EmitsLastLineWithoutTrailingNewline) {
     ASSERT_NO_FATAL_FAILURE(WriteFile("last line"));
     FileDataSource source(path_.string());
-    FileDataReader<std::string> reader(&source);
+    FileDataReader reader(&source);
 
     auto message = reader.poll();
     ASSERT_TRUE(std::holds_alternative<Record<std::string>>(message));
@@ -93,7 +93,7 @@ TEST_F(FileDataReaderTest, EmitsLastLineWithoutTrailingNewline) {
 TEST_F(FileDataReaderTest, RemainsFinishedOnSubsequentPolls) {
     ASSERT_NO_FATAL_FAILURE(WriteFile("once\n"));
     FileDataSource source(path_.string());
-    FileDataReader<std::string> reader(&source);
+    FileDataReader reader(&source);
 
     auto message = reader.poll();
     ASSERT_TRUE(std::holds_alternative<Record<std::string>>(message));
